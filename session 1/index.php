@@ -1,5 +1,6 @@
 <?php
-require_once('./functions.php'); 
+require_once('./functions.php');
+$number_of_hours = 4; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,15 +13,25 @@ require_once('./functions.php');
     <?php
     require('./lessons.php');
     require('./asatid.php');
-    dd($asatid);
+    require('./relations.php');
+    // dd($asatid_lessons);
+    foreach($asatid_lessons as $asatid_id=>$lesson_ids)
+    {
+        echo($asatid[$asatid_id]['name']);
+        foreach($lesson_ids as $lesson_id)
+        {
+            echo($lessons[$lesson_id]['title']);
+        }
+        echo('<br>');
+    }
      
     ?>
     <body dir="rtl">
-        <h1>برنامه ترم اول سال تحصیلی 1402 - 1401 </h1>
+        <h1>برنامه ترم اول سال تحصیلی 1402 - 1401 مهندسی نرم افزار</h1>
         <div class="row col-md-6 col-sm-12" style="margin-right:auto;margin-left:auto;">
             <table class="table table-bordered table-striped">
                 <thead>
-                    <th>#</th>
+                    <th># #</th>
                     <th>8-10</th>
                     <th>10-12</th>
                     <th>13:30-15:30</th>
@@ -39,10 +50,18 @@ require_once('./functions.php');
                 <?php for($cnt=0;$cnt<5;$cnt++){ ?>
                     <tr>
                         <td><?php echo($week_days[$cnt]) ?></td>
-                        <td>#</td>
-                        <td>#</td>
-                        <td>#</td>
-                        <td>#</td>
+                        <?php for($tcount = 0; $tcount<$number_of_hours;$tcount++) {
+                            $k = $cnt*$number_of_hours+$tcount;
+                            foreach($asatid_lessons as $asatid_id => $lesson_ids):
+                                foreach($lesson_ids as $lesson_id):
+                                    $program = $lessons[$lesson_id]['program'];
+                                    if(in_array($k,$program)){
+                            ?>
+                                        <td><?php echo($lessons[$lesson_id]['title'].' ('.$asatid[$asatid_id]['name'].')'); ?></td>
+                                    <?php } ?>
+                                <?php endforeach ?>
+                            <?php endforeach ?>
+                        <?php  } ?>
                     </tr>
                 <?php } ?>
                 </tbody>
