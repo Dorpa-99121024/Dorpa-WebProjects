@@ -5,6 +5,7 @@ function dd($a)
   var_dump($a);
   die;
 }
+
 function get_lessons_in_this_time($asatid_lessons, $lessons, $asatid ,$k)
 {
   $cell = "";
