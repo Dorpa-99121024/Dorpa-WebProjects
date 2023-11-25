@@ -4,7 +4,17 @@ require_once('./MySQLDB.php');
 $db = new MySQLDB();
 // $db->createTable('profs', 'id int(11) PRIMARY KEY AUTO_INCREMENT, name VARCHAR(256)');
 // $db->createTable('lessons', 'id int(11) PRIMARY KEY, title VARCHAR(256), vahed int(1), term int(1)');
+require_once('./lessons.php');
+foreach($lessons as $lesson)
+{
+    $data = [
+        'title' => $lesson['title'],
+        'vahed' => $lesson['vahed'],
+        'term' => $lesson['term']
+    ];
+    $db->insert('lessons', $data);
 
+}
 dd($db);
 // $connection = connect_to_mysql();
 // $res = $connection->query("SHOW DATABASES;");
@@ -19,7 +29,7 @@ $number_of_hours = 4;
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>تمرین درس برنامه نویسی وب</title>
+        <title>اولین درس برنامه نویسی وب</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
         <style>
             .lesson{
@@ -30,15 +40,15 @@ $number_of_hours = 4;
     </head>
     <?php
     require('./lessons.php');
-    require('./asatid.php');
+    require('./profs.php');
     require('./relations.php');
     ?>
     <body dir="rtl">
-        <h1>برنامه ترم اول سال تحصیلی 1402 - 1401 مهندسی نرم افزار</h1>
+        <h1>برنامه ترم اول سال تحصیلی 401-402 مهندسی نرم افزار</h1>
         <div class="row col-md-6 col-sm-12" style="margin-right:auto;margin-left:auto;">
             <table class="table table-bordered table-striped">
                 <thead>
-                    <th># #</th>
+                    <th>#</th>
                     <th>8-10</th>
                     <th>10-12</th>
                     <th>13:30-15:30</th>
@@ -59,7 +69,7 @@ $number_of_hours = 4;
                         <td><?php echo($week_days[$cnt]) ?></td>
                         <?php for($tcount = 0; $tcount<$number_of_hours;$tcount++) {
                             $k = $cnt*$number_of_hours+$tcount;
-                            $cell =  get_lessons_in_this_time($asatid_lessons, $lessons, $asatid ,$k);
+                            $cell =  get_lessons_in_this_time($profs_lessons, $lessons, $profs ,$k);
                             ?>
                             <?php if($cell) {?>
                                 <td class="lesson"><?php print $cell ?></td>
