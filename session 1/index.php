@@ -2,10 +2,16 @@
 require_once('./functions.php');
 require_once('./MySQLDB.php');
 $db = new MySQLDB();
-require_once('./profs.php');
-foreach($profs as $prof)
+require_once('./lessons.php');
+foreach($lessons as $lesson)
 {
-    $db->insert('profs',$prof);
+    $data = [
+        'title' => $lesson['title'],
+        'vahed' => $lesson['vahed'],
+        'term' => $lesson['term'],
+        'program' => json_encode($lesson['program']),
+    ];
+    $db->insert('lessons', $data);
 }
 $number_of_hours = 4; 
 ?>
@@ -33,7 +39,7 @@ $number_of_hours = 4;
         <div class="row col-md-6 col-sm-12" style="margin-right:auto;margin-left:auto;">
             <table class="table table-bordered table-striped">
                 <thead>
-                    <th># #</th>
+                    <th>#</th>
                     <th>8-10</th>
                     <th>10-12</th>
                     <th>13:30-15:30</th>
